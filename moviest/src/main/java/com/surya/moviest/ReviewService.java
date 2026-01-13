@@ -14,11 +14,11 @@ public class ReviewService {
     private MongoTemplate mongoTemplate;
     public Review createReview(String reviewBody, String imdbID){
         Review review=reviewRepository.insert(new Review(reviewBody));
-        reviewRepository.save(review);
+
 
         mongoTemplate.update(Movie.class)
                 .matching(Criteria.where("imdbId").is(imdbID))
-                .apply(new Update().push("reviewIds").value(review))
+                .apply(new Update().push("reviewIds").value(review.getId()))
                 .first();
         return review;
 
