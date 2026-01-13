@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import MovieCard from "../components/MovieCard";
 
-const API_BASE = "http://localhost:8080/api/v1/movies";
+const API_BASE = `${import.meta.env.VITE_API_BASE_URL}/api/v1/movies`;
 
 export default function Home() {
   const [movies, setMovies] = useState([]);
@@ -10,7 +10,7 @@ export default function Home() {
   useEffect(() => {
     axios.get(API_BASE)
       .then(res => setMovies(res.data))
-      .catch(err => console.error(err));
+      .catch(err => console.error("Error fetching movies:", err));
   }, []);
 
   return (
